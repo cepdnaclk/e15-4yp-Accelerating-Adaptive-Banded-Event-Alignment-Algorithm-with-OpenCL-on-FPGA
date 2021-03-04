@@ -2,42 +2,42 @@
    "title":"This is the title of the project",
    "team":[
       {
-         "name":"Team Member Name 1",
-         "email":"email@eng.pdn.ac.lk",
-         "eNumber":"E/yy/xxx",
-         "github_profile":"#",
-         "linkedin_profile":"#",
+         "name":"Wishma Herath",
+         "email":"e15123@eng.pdn.ac.lk",
+         "eNumber":"E/15/123",
+         "github_profile":"https://github.com/WishmaL",
+         "linkedin_profile":"https://www.linkedin.com/in/wishma-herath-0a3b4a132/",
          "researchgate_profile":"#"
       },
       {
-         "name":"Team Member Name 2",
-         "email":"email@eng.pdn.ac.lk",
-         "eNumber":"E/yy/xxx",
-         "github_profile":"#",
-         "linkedin_profile":"#",
+         "name":"Pubudu Premathilaka",
+         "email":"pubudu.premathilaka@eng.pdn.ac.lk",
+         "eNumber":"E/15/280",
+         "github_profile":"https://github.com/pubuduudara/",
+         "linkedin_profile":"https://www.linkedin.com/in/pubuduudara/",
          "researchgate_profile":"#"
       },
       {
-         "name":"Team Member Name 3",
-         "email":"email@eng.pdn.ac.lk",
-         "eNumber":"E/yy/xxx",
-         "github_profile":"#",
-         "linkedin_profile":"#",
+         "name":"Suneth Samarasinghe",
+         "email":"e15316@eng.pdn.ac.lk",
+         "eNumber":"E/15/316",
+         "github_profile":"https://github.com/imsuneth/",
+         "linkedin_profile":"https://www.linkedin.com/in/imsuneth/",
          "researchgate_profile":"#"
       }
    ],
    "supervisors":[
       {
-         "name":"Dr. Supervisor 1",
-         "email":"email@eng.pdn.ac.lk",
-         "linkedin_profile":"",
-         "researchgate_profile":""
+         "name":"Dr. Hasindu Gamaarachchi",
+         "email":"hasindu2008@gmail.com ",
+         "linkedin_profile":"https://www.linkedin.com/in/hasindugamaarachchi/",
+         "researchgate_profile":"https://www.researchgate.net/profile/Hasindu-Gamaarachchi-2"
       },
       {
-         "name":"Dr. Supervisor 2",
-         "email":"email@eng.pdn.ac.lk",
-         "linkedin_profile":"",
-         "researchgate_profile":""
+         "name":"Prof. Roshan Ragel",
+         "email":"roshanr@eng.pdn.ac.lk ",
+         "linkedin_profile":"https://www.linkedin.com/in/roshanragel/",
+         "researchgate_profile":"https://www.researchgate.net/profile/Roshan-Ragel"
       }
    ],
    "publications":[
@@ -56,5 +56,7 @@
    ],
    "tags":[
       "Final Year Projects"
+      "HPC"
+      "OpenCL"
    ]
 }
