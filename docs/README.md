@@ -76,7 +76,7 @@ FPGAs using OpenCL
 
 [//]: # ( NOTE: EDIT THIS LINKS WITH YOUR REPO DETAILS )
 
-- [Project Repository](https://github.com/cepdnaclk/repository-name)
+- [Project Repository](https://github.com/imsuneth/abea-on-fpga.git)
 - [Project Page](https://cepdnaclk.github.io/repository-name)
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
