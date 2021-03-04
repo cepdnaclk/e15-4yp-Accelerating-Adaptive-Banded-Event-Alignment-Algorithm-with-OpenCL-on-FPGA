@@ -13,14 +13,14 @@ title:
 
 #### Team
 
-- E/15/123, Wishma Herath, [email](mailto:name@email.com)
-- E/15/280, Pubudu Premathilaka, [email](mailto:name@email.com)
-- E/15/316, Suenth Samarasinghe, [email](mailto:name@email.com)
+- E/15/123, Wishma Herath, [email](mailto:e15123@eng.pdn.ac.lk)
+- E/15/280, Pubudu Premathilaka, [email](mailto:pubudu.premathilaka@eng.pdn.ac.lk)
+- E/15/316, Suenth Samarasinghe, [email](mailto:e15316@eng.pdn.ac.lk)
 
 #### Supervisors
 
-- Name, [email](mailto:name@eng.pdn.ac.lk)
-- Name, [email](mailto:name@eng.pdn.ac.lk)
+- Prof Roshan Ragel, [email](mailto:roshanr@eng.pdn.ac.lk)
+- Dr Hasindu Gamaarachchi , [email](mailto:hasindu2008@gmail.com)
 
 #### Table of content
 
