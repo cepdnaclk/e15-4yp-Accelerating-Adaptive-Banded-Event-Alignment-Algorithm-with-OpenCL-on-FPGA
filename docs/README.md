@@ -9,13 +9,13 @@ title:
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+# Accelerating-Adaptive-Banded-Event-Alignment-Algorithm-with-OpenCL-on-FPGA
 
 #### Team
 
-- eNumber, Name, [email](mailto:name@email.com)
-- eNumber, Name, [email](mailto:name@email.com)
-- eNumber, Name, [email](mailto:name@email.com)
+- E/15/123, Wishma Herath, [email](mailto:name@email.com)
+- E/15/280, Pubudu Premathilaka, [email](mailto:name@email.com)
+- E/15/316, Suenth Samarasinghe, [email](mailto:name@email.com)
 
 #### Supervisors
 
