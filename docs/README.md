@@ -36,7 +36,24 @@ title:
 ---
 
 ## Abstract
-
+Nanopore sequencing is a third-generation sequencing technology that can analyze long DNA, RNA fragments
+in real-time. It measures the change in electrical current as
+nucleic acids pass through a protein nanopore. The Nanopolish
+software package utilizes the aforementioned signal level changes
+to obtain useful results in oxford nanopore DNA sequencing.
+Adaptive Banded Event Alignment (ABEA) is a dynamic programming algorithm used in nanopolish software packages to
+polish sequencing data and identify nano-strand nucleotides
+such as measuring DNA methylation. Prior investigations show
+that ABEA consumes 70% of total CPU time in nanopolish.
+Thus, we identified optimizing the ABEA algorithm as vital
+for nanopore sequencing applications. OpenCL(Open Computing
+Language) is currently one of the fastest-growing high-level
+synthesis frameworks in the FPGA domain. OpenCL enables
+programming in high-level languages such as C, C++ and those
+programs are converted to run on heterogeneous CPU, GPU,
+and FPGA systems. In this study, we parallelize and optimize
+the implementation of the ABEA algorithm to run efficiently on
+FPGAs using OpenCL
 ## Related works
 
 ## Methodology
