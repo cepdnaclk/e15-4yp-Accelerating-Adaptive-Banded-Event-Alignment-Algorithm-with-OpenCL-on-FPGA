@@ -82,6 +82,9 @@ The second step calculates the rest of the bands (b2, b3,..) while moving the ad
 ### Pipeline Diagram
 ![](../assests/images/pipeline.png)
 
+### Pseudo Code for SWI Implementation
+![](../assests/images/swi.PNG)
+
 ## Experiments and Results
 ### Experiment Setup
 Table below shows specifications of hardware accelerators and the host PC used to obtain results. 
@@ -96,17 +99,74 @@ The datasets used for the experiments, their statistics (number of reads, total 
 ![](../assests/images/dataset.PNG)
 
 ## Performance Results
-We select a set of implementations on different platforms and perform event alignment on ''chr_22 dataset''. Then we compare the performance in terms of data transfer time, execution time and power consumption. The selected set of implementations are as follows.
+Detailed analysis of all the loops in SWI kernel is shown below. Apart from the three of the main for-loops mentioned above, other loops are fully unrolled when the lower and upper bounds are constant for each iteration of its outer-loop. Rest of the loops are made to execute in a pipeline manner with an initiation interval of 1. 
 
+![](../assests/images/loop.PNG)
+
+Table below shows the estimated resources used by SWI kernel in the design, all channels, global interconnect, constant cache, and board interface compiled for DE5-net FPGA.
+
+![](../assests/images/res.PNG)
+
+We select a set of implementations on different platforms and perform event alignment on chr_22 dataset. Then we compare the performance in terms of data transfer time, execution time and power consumption. The selected set of implementations are as follows.
+
+Power consumption of different hardware platforms is calculated as explained below. Our DE5net board does not have an on-board power sensor. Therefore, we run Quartus early power estimator tool on the placed-and-routed OpenCL kernel to estimate the power usage of the board. We assume that each memory module uses a maximum of 1.17 Watts based on the datasheet of a similar memory model. Hence, add 2.34 Watts to the resulting estimation value to account for the power consumption of the two memory modules. We used nvidia-smi tool to measure power draw of the Nvidia GPU cards with a sampling interval of 1ms. To measure the power consumption of CPU and RAM modules of the host computer, we use Intel Power Governor software utility library.
+
+When an implementation use both host and FPGA for event alignment calculations, we calculate the total energy consumed by both host and FPGA. We assume 72W as the power consumption of host which is the same we get while executing cpu implementation. Since, 72W corresponds to the power usage for all pre, core, and post computations, it is reasonable to take it as the max boundary. Table below shows the results obtained from different implementations.
 ![](../assests/images/results1.PNG)
+
+![](../assests/images/des.PNG)
+
+Figures below show the execution time of each implementation and the power consumption of each implementation.
+
+![](../assests/images/time.PNG)
+
+![](../assests/images/power.PNG)
+
+The observations can be analyzed and justified as follows.
+
+Eventhough NDRange kernels on FPGA have a lesser power consumption than GPU implementations, they reported a higher execution time. Therefore, they are ranked at 7 and 8 in terms of the energy consumption.
+
+Usually, *f5c-gpu* allocate a set of very long reads selected according to a heuristic to be computed on the CPU and the rest of the reads on the GPU. It results in around 50 seconds of execution time on Tesla K40. But, here we force the *f5c-gpu* implementation to compute all the reads only on the GPU (*cuda-k40*). We observe that *cuda-k40* and *ocl-k40* perform almost at the same level.
+
+Unlike in FPGAs, in NVIDIA GPUs, Our NDrange OpenCL implementation executes in a similar programming model to CUDA, and it works as a SIMD. When considering CUDA and OpenCL, there are minor differences. The reason for slight execution time degradation in the *ocl-k40* could be the kernel compilation during the execution time.
+
+Due to the lesser execution time of *cuda-k40*, it outperforms the energy advantage of *cpu* and gets ranks 4 and *ocl-k40* gets rank 6.
+
+As mentioned, since the CPU's power requirement is lesser than that of the GPU, based on the energy consumption, the *cpu* implementation gets rank 5.
+
+Among SWI implementations, kernels with suitable FPGA specific optimization techniques shows an improved the performance in execution time and power consumption which lead to less energy consumption. Hence, *swi-opt-2* implementation is in rank 1 and others get rank 2 and 3. 
+
+Among NDRange implementations on FPGA, decomposition of kernels into too many kernels results in poor execution time eventhough the power consumption (estimated for DE5-net) is the same.
+
+Among FPGA implementations, all SWI kernels (*swi-*) perform significantly better than NDRange kernels on FPGA (*nd-*) in terms of both execution time and power consumption. The best SWI kernel is 2x faster and consumes only 34% of the energy compared to the best NDRange kernel.
+
+As shown in Figure, In terms of execution time, GPU implementations (both *cuda-k40* and *ocl-k40*) perform better and 4x faster than *swi-opt-2* on DE5-net.
+
+However, In terms of the energy required to perform ABEA on the same dataset, SWI kernel implementations on FPGA are in lead. *swi-opt-2* on DE5-net needs only 43% of the energy consumption of the GPU implementation on Tesla K40.
+
 
 
 ## Conclusion
+The Adaptive Banded Event Alignment algorithm is an improved version of DNA sequencing, which is extensively used in nanopore DNA sequencing. In the previous work, this algorithm has been parallelized and run efficiently on GPUs. 
+
+In our work, we introduce several implementations of the ABEA algorithm using OpenCL to run on FPGA. We evaluate the performance of the implementations in terms of runtime and energy consumption. 
+
+Among FPGA related implementations, SWI kernel with suitable FPGA specific optimization techniques performs better than other FPGA implementations including NDRange kernel.
+
+In terms of runtime, GPU implementations (both CUDA and OpenCL NDRange kernel) on Tesla K40 perform better and 4x faster than FPGA implementations on DE5-net.
+
+However, in terms of the energy consumption to perform ABEA on the same dataset FPGA implementations are in lead. FPGA implementation on DE5-net needs only 43% of the energy consumption of the GPU implementation on Tesla K40.
+
+Through out our work, we identified the potential and ease of using HLS over traditional methods for hardware programming. We used DE5-net FPGA with OpenCL 18.0 for experimenting and evaluation of results. It is a mid-range hardware compared to the state-of-the-art. 
+
+The maximum predicted frequency we got for the kernels was around 250 Hz and it is even lesser at the execution. The kernel operating frequencies of FPGAs are significantly low compared to CPUs and GPUs. The absence of power sensors in the DE5-net board we had to estimate based on the circuit elements using Intel Quartus Early Power Estimator which they state gives a medium accuracy of the estimate. The true power consumption of kernels may differ due to many other reasons such as the environmental conditions.
+
+Therefore, we believe that with the advancement of FPGA hardware and HLS tools with better optimizations methods can provide better results.
 
 ## Publications
-1. [Semester 7 report](./)
-2. [Semester 7 slides](./)
-3. [Semester 8 report](./)
+1. [Semester 7 report](../assests/reports/sem7_report.pdf)
+2. [Semester 7 slides](../assests/reports/sem7_presentation.pdf)
+3. [Semester 8 report](../assests/reports/sem8_report.pdf)
 4. [Semester 8 slides](./)
 5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./).
 
