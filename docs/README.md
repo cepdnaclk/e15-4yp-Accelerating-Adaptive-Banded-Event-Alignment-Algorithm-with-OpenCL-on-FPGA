@@ -54,6 +54,7 @@ The first step initializes bands and trace arrays, initializes the first two ban
 
 The second step calculates the rest of the bands (b2, b3,..) while moving the adaptive band according to the Suzuki Kasahara rule. Calculation of the current band depends on the previous two bands results. Therefore, the loop has to be serially executed. An inner loop always goes through the band and fills the cells within a band. This loop can be pipelined with a minimum initiation interval of 1 due to the absence of data or memory dependency between loop iterations. The final traceback step consists of a loop with high data dependency between two loop iterations. This behavior results in pipelines with an initiation interval of almost the latency of the pipeline stage. Therefore, it is equivalent to serial execution, which is more suitable for running on a CPU than a SWI kernel on FPGA. According to the above observations, we merged the first step and second step to build a deeply pipelined SWI kernel. Then CPU performs the traceback step. Following figure shows a pipeline diagram including only the main for-loops in the kernel. Computations related to a new read starts its execution in every clock cycle, set of bands in a read executes in a serial manner due to unavoidable data dependencies, and a new cell inside a band starts its execution in every clock cycle. 
 
+
 ## Experiment Setup 
 
 ## Results and Analysis
