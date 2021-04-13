@@ -36,24 +36,9 @@ title:
 ---
 
 ## Abstract
-Nanopore sequencing is a third-generation sequencing technology that can analyze long DNA, RNA fragments
-in real-time. It measures the change in electrical current as
-nucleic acids pass through a protein nanopore. The Nanopolish
-software package utilizes the aforementioned signal level changes
-to obtain useful results in oxford nanopore DNA sequencing.
-Adaptive Banded Event Alignment (ABEA) is a dynamic programming algorithm used in nanopolish software packages to
-polish sequencing data and identify nano-strand nucleotides
-such as measuring DNA methylation. Prior investigations show
-that ABEA consumes 70% of total CPU time in nanopolish.
-Thus, we identified optimizing the ABEA algorithm as vital
-for nanopore sequencing applications. OpenCL(Open Computing
-Language) is currently one of the fastest-growing high-level
-synthesis frameworks in the FPGA domain. OpenCL enables
-programming in high-level languages such as C, C++ and those
-programs are converted to run on heterogeneous CPU, GPU,
-and FPGA systems. In this study, we parallelize and optimize
-the implementation of the ABEA algorithm to run efficiently on
-FPGAs using OpenCL
+Nanopore sequencing is a third-generation sequencing technology that can analyze long DNA, RNA fragments in real-time. It measures the change in electrical current as nucleic acids pass through a protein nanopore. The Nanopolish software package utilizes the aforementioned signal level changes to obtain useful results in oxford nanopore DNA sequencing. Adaptive Banded Event Alignment (ABEA) is a dynamic programming algorithm used in nanopolish software packages to polish sequencing data and identify nano-strand nucleotides such as measuring DNA methylation. Prior investigations show that ABEA consumes 70\% of total CPU time in nanopolish. Thus, optimizing the ABEA algorithm is vital for nanopore sequencing applications. Previous work has deployed accelerated version of ABEA on GPUs using CUDA and has gained improvements on execution time but with high power requirement. With the advancements of HLS (High-Level Synthesis) tools, FPGAs (Field Programmable Gate Arrays) are emerging as accelerators in the field of high performance computing that gives reasonable runtime performance while consuming less power.
+% OpenCL (Open Computing Language) is currently one of the fastest-growing HLS frameworks in the FPGA domain. OpenCL enables programming in high-level languages such as C, C++ and those programs are converted to run on heterogeneous CPU, GPU, and FPGA systems.
+In this work, we induce a modified version of ABEA for FPGAs using OpenCL. We experimentally identify and adapt optimization techniques to achieve better performance on DE5-net FPGA. We show that our implementation is able to archive  energy consumption of 43\% of the previous implementation of ABEA on GPU (f5c). Further, we present performance comparison of our implementations with other different implementations on different platforms in terms of execution time and energy consumption.
 ## Related works
 
 ## Methodology
