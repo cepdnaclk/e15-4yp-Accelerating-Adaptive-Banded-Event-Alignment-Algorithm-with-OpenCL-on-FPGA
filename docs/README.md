@@ -13,7 +13,7 @@ title:
 
 #### Team
 
-- E/15/123, Wishma Herath, [email](mailto:e15123@eng.pdn.ac.lk)
+- E/15/123, Wishma Herath, (mailto:e15123@eng.pdn.ac.lk)
 - E/15/280, Pubudu Premathilaka, [email](mailto:pubudu.premathilaka@eng.pdn.ac.lk)
 - E/15/316, Suenth Samarasinghe, [email](mailto:e15316@eng.pdn.ac.lk)
 
