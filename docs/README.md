@@ -54,12 +54,12 @@ DNA sequencing is an emerging field. Therefore, it is crucial to reduce the tota
 OpenCL platform model shown in below is an abstract hardware model for devices. One platform has a host and one or more devices connected to the host. Each device may have multiple Compute Units (CUs) with multiple Processing Elements (PEs).
 
 #### OpenCL Platform Model
-![](../assests/images/platform.png)
+![](/assests/images/platform.png)
 
 The OpenCL memory model can be divided into two major memories host and device. Host memory is accessible by only the host, and the device memory accessible by kernels executing on OpenCL devices. The device memory can be further divided into global memory (shared by all the work-groups), constant (read-only memory for the device) memory, local memory (shared by all the work-items in a work-group), and private memory (specific to each work-item). 
 
 #### OpenCL Memory Model
-![](../assests/images/mem.png)
+![](/assests/images/mem.png)
 
 OpenCL supports two types of kernels, namely NDRange kernels and Single-Work-Item (SWI) kernels. In the NDRange kernel, OpenCL generates a deep pipeline as a computing unit. All the work-items from all the work-groups execute on that pipeline. The compiler automatically performs work-group pipelining. NDRange kernel has a similar thread hierarchy to CUDA. Each thread is called a work-item, and multiple work-items are grouped to form a work-group. In the SWI kernels, the entire kernel is run by a single work-item, and loop iterations are pipelined to achieve high performance. Initiation Interval (II) is the number of hardware clock cycles a pipeline must wait for before launching the successive loop iterations.
 
@@ -80,25 +80,25 @@ The first step initializes bands and trace arrays, initializes the first two ban
 
 The second step calculates the rest of the bands (b2, b3,..) while moving the adaptive band according to the Suzuki Kasahara rule. Calculation of the current band depends on the previous two bands results. Therefore, the loop has to be serially executed. An inner loop always goes through the band and fills the cells within a band. This loop can be pipelined with a minimum initiation interval of 1 due to the absence of data or memory dependency between loop iterations. The final traceback step consists of a loop with high data dependency between two loop iterations. This behavior results in pipelines with an initiation interval of almost the latency of the pipeline stage. Therefore, it is equivalent to serial execution, which is more suitable for running on a CPU than a SWI kernel on FPGA. According to the above observations, we merged the first step and second step to build a deeply pipelined SWI kernel. Then CPU performs the traceback step. Following figure shows a pipeline diagram including only the main for-loops in the kernel. Computations related to a new read starts its execution in every clock cycle, set of bands in a read executes in a serial manner due to unavoidable data dependencies, and a new cell inside a band starts its execution in every clock cycle. 
 ### Pipeline Diagram
-![](../assests/images/pipeline.png)
+![](/assests/images/pipeline.png)
 
 ## Experiments and Results
 ### Experiment Setup
 Table below shows specifications of hardware accelerators and the host PC used to obtain results. 
 
-![](../assests/images/setup.PNG)
+![](/assests/images/setup.PNG)
 
 ### Dataset
 The experimental data set is a subset of publicly available reads aligned to a 2kb region in the E. coli draft assembly and publicly available NA12878 (human genome) ''Nanopore WGS Consortium'' sequencing data. 
 
 The datasets used for the experiments, their statistics (number of reads, total bases, mean read length and maximum read length) are listed below.
 
-![](../assests/images/dataset.PNG)
+![](/assests/images/dataset.PNG)
 
 ## Performance Results
 We select a set of implementations on different platforms and perform event alignment on ''chr_22 dataset''. Then we compare the performance in terms of data transfer time, execution time and power consumption. The selected set of implementations are as follows.
 
-![](../assests/images/results1.PNG)
+![](/assests/images/results1.PNG)
 
 
 ## Conclusion
