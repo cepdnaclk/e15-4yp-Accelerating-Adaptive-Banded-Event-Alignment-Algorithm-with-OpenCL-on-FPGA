@@ -54,12 +54,12 @@ DNA sequencing is an emerging field. Therefore, it is crucial to reduce the tota
 OpenCL platform model shown in below is an abstract hardware model for devices. One platform has a host and one or more devices connected to the host. Each device may have multiple Compute Units (CUs) with multiple Processing Elements (PEs).
 
 #### OpenCL Platform Model
-![](../assests/images/platform.png)
+![](./assests/images/platform.png)
 
 The OpenCL memory model can be divided into two major memories host and device. Host memory is accessible by only the host, and the device memory accessible by kernels executing on OpenCL devices. The device memory can be further divided into global memory (shared by all the work-groups), constant (read-only memory for the device) memory, local memory (shared by all the work-items in a work-group), and private memory (specific to each work-item). 
 
 #### OpenCL Memory Model
-![](../assests/images/mem.png)
+![](./assests/images/mem.png)
 
 OpenCL supports two types of kernels, namely NDRange kernels and Single-Work-Item (SWI) kernels. In the NDRange kernel, OpenCL generates a deep pipeline as a computing unit. All the work-items from all the work-groups execute on that pipeline. The compiler automatically performs work-group pipelining. NDRange kernel has a similar thread hierarchy to CUDA. Each thread is called a work-item, and multiple work-items are grouped to form a work-group. In the SWI kernels, the entire kernel is run by a single work-item, and loop iterations are pipelined to achieve high performance. Initiation Interval (II) is the number of hardware clock cycles a pipeline must wait for before launching the successive loop iterations.
 
@@ -80,47 +80,42 @@ The first step initializes bands and trace arrays, initializes the first two ban
 
 The second step calculates the rest of the bands (b2, b3,..) while moving the adaptive band according to the Suzuki Kasahara rule. Calculation of the current band depends on the previous two bands results. Therefore, the loop has to be serially executed. An inner loop always goes through the band and fills the cells within a band. This loop can be pipelined with a minimum initiation interval of 1 due to the absence of data or memory dependency between loop iterations. The final traceback step consists of a loop with high data dependency between two loop iterations. This behavior results in pipelines with an initiation interval of almost the latency of the pipeline stage. Therefore, it is equivalent to serial execution, which is more suitable for running on a CPU than a SWI kernel on FPGA. According to the above observations, we merged the first step and second step to build a deeply pipelined SWI kernel. Then CPU performs the traceback step. Following figure shows a pipeline diagram including only the main for-loops in the kernel. Computations related to a new read starts its execution in every clock cycle, set of bands in a read executes in a serial manner due to unavoidable data dependencies, and a new cell inside a band starts its execution in every clock cycle. 
 ### Pipeline Diagram
-![](../assests/images/pipeline.png)
+![](./assests/images/pipeline.png)
 
 ### Pseudo Code for SWI Implementation
-![](../assests/images/swi.PNG)
+![](./assests/images/swi.PNG)
 
 ## Experiments and Results
 ### Experiment Setup
 Table below shows specifications of hardware accelerators and the host PC used to obtain results. 
 
-![](../assests/images/setup.PNG)
+![](./assests/images/setup.PNG)
 
 ### Dataset
 The experimental data set is a subset of publicly available reads aligned to a 2kb region in the E. coli draft assembly and publicly available NA12878 (human genome) ''Nanopore WGS Consortium'' sequencing data. 
 
 The datasets used for the experiments, their statistics (number of reads, total bases, mean read length and maximum read length) are listed below.
 
-![](../assests/images/dataset.PNG)
+![](./assests/images/dataset.PNG)
 
 ## Performance Results
 Detailed analysis of all the loops in SWI kernel is shown below. Apart from the three of the main for-loops mentioned above, other loops are fully unrolled when the lower and upper bounds are constant for each iteration of its outer-loop. Rest of the loops are made to execute in a pipeline manner with an initiation interval of 1. 
 
-![](../assests/images/loop.PNG)
+![](./assests/images/loop.PNG)
 
 Table below shows the estimated resources used by SWI kernel in the design, all channels, global interconnect, constant cache, and board interface compiled for DE5-net FPGA.
 
-![](../assests/images/res.PNG)
+![](./assests/images/res.PNG)
 
-We select a set of implementations on different platforms and perform event alignment on chr_22 dataset. Then we compare the performance in terms of data transfer time, execution time and power consumption. The selected set of implementations are as follows.
+![](./assests/images/results1.PNG)
 
-Power consumption of different hardware platforms is calculated as explained below. Our DE5net board does not have an on-board power sensor. Therefore, we run Quartus early power estimator tool on the placed-and-routed OpenCL kernel to estimate the power usage of the board. We assume that each memory module uses a maximum of 1.17 Watts based on the datasheet of a similar memory model. Hence, add 2.34 Watts to the resulting estimation value to account for the power consumption of the two memory modules. We used nvidia-smi tool to measure power draw of the Nvidia GPU cards with a sampling interval of 1ms. To measure the power consumption of CPU and RAM modules of the host computer, we use Intel Power Governor software utility library.
-
-When an implementation use both host and FPGA for event alignment calculations, we calculate the total energy consumed by both host and FPGA. We assume 72W as the power consumption of host which is the same we get while executing cpu implementation. Since, 72W corresponds to the power usage for all pre, core, and post computations, it is reasonable to take it as the max boundary. Table below shows the results obtained from different implementations.
-![](../assests/images/results1.PNG)
-
-![](../assests/images/des.PNG)
+![](./assests/images/des.PNG)
 
 Figures below show the execution time of each implementation and the power consumption of each implementation.
 
-![](../assests/images/time.PNG)
+![](./assests/images/time.PNG)
 
-![](../assests/images/power.PNG)
+![](./assests/images/power.PNG)
 
 The observations can be analyzed and justified as follows.
 
@@ -164,9 +159,9 @@ The maximum predicted frequency we got for the kernels was around 250 Hz and it 
 Therefore, we believe that with the advancement of FPGA hardware and HLS tools with better optimizations methods can provide better results.
 
 ## Publications
-1. [Semester 7 report](../assests/reports/sem7_report.pdf)
-2. [Semester 7 slides](../assests/reports/sem7_presentation.pdf)
-3. [Semester 8 report](../assests/reports/sem8_report.pdf)
+1. [Semester 7 report](./assests/reports/sem7_report.pdf)
+2. [Semester 7 slides](./assests/reports/sem7_presentation.pdf)
+3. [Semester 8 report](./assests/reports/sem8_report.pdf)
 4. [Semester 8 slides](./)
 5. Author 1, Author 2 and Author 3 "Research paper title" (2021). [PDF](./).
 
